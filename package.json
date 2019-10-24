@@ -1,0 +1,70 @@
+{
+	"name": "commit-tagger",
+	"displayName": "Commit Tagger",
+	"description": "Generate tag for your commit at ease.",
+	"version": "1.0.0",
+	"publisher": "Mongkii",
+	"icon": "images/icon.png",
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"git",
+		"commit",
+		"tag",
+		"commitizen"
+	],
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"bugs": {
+		"url": "https://github.com/mongkii/commit-tagger/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mongkii/commit-tagger"
+	},
+	"homepage": "https://github.com/mongkii/commit-tagger/blob/master/README.md",
+	"activationEvents": [
+		"onCommand:extension.commitTagger"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.commitTagger",
+				"title": "Commit Tagger",
+				"icon": {
+					"dark": "resources/dark/tag.svg",
+					"light": "resources/light/tag.svg"
+				}
+			}
+		],
+		"menus": {
+			"scm/title": [
+				{
+					"when": "scmProvider == git",
+					"command": "extension.commitTagger",
+					"group": "navigation"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/vscode": "^1.30.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode-test": "^1.2.0"
+	}
+}
