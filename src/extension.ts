@@ -91,7 +91,7 @@ function openScopeNamePicker(
         ScopeMenuCreate
       ];
       picker.items = scopePickerItems;
-      picker.placeholder = '请选择本次提交影响范围（如：代码的哪一模块）';
+      picker.placeholder = '请选择本次提交影响范围（如：项目的哪一模块）';
       picker.buttons = scopeNames.length > 0 ? [buttonDelete] : [];
       picker.show();
     }
