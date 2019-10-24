@@ -7,18 +7,18 @@ export const workspaceStateKey = {
 export const commitTypes: CommitType[] = [
   {
     label: 'feat',
-    description: '新功能',
-    value: 'feat:'
+    value: 'feat:',
+    description: '新功能'
   },
   {
     label: 'fix',
-    description: '修复问题',
-    value: 'fix:'
+    value: 'fix:',
+    description: '修复问题'
   },
   {
     label: 'refactor',
-    description: '重构，除 feat 与 fix 外的代码变动',
-    value: 'refactor:'
+    value: 'refactor:',
+    description: '重构，除 feat 与 fix 外的代码变动'
   },
   {
     label: 'perf',
@@ -44,5 +44,5 @@ export const commitTypes: CommitType[] = [
     label: 'docs',
     value: 'docs:',
     description: '修改说明文档'
-  },
+  }
 ];

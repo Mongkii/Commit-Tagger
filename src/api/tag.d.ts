@@ -1,7 +1,7 @@
 export interface CommitType {
   readonly label: string;
-  readonly description: string;
   readonly value: string;
+  readonly description: string;
 }
 
 export const enum ScopeMenuType {
