@@ -80,6 +80,7 @@ function openScopeNamePicker(
     }
     const picker = window.createQuickPick();
     const buttonDelete = getButtonDelete(context);
+    const placeholderPrefix = selectedCommitType.value;
     function setAndShowScopeNamePicker(): void {
       const scopeNames: ScopeName[] = context.workspaceState.get(
         SCOPE_NAMES,
@@ -91,7 +92,7 @@ function openScopeNamePicker(
         ScopeMenuCreate
       ];
       picker.items = scopePickerItems;
-      picker.placeholder = '请选择本次提交影响范围（如：项目的哪一模块）';
+      picker.placeholder = `${placeholderPrefix} 请选择本次提交影响范围（如：项目的哪一模块）`;
       picker.buttons = scopeNames.length > 0 ? [buttonDelete] : [];
       picker.show();
     }
