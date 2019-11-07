@@ -145,7 +145,6 @@ export function activate(context: ExtensionContext) {
     'extension.commitTagger',
     (uri?: InputUri) => {
       const git = getGitAPI();
-      console.log(git);
       if (!git) {
         window.showErrorMessage('没有找到 Git');
         return;
