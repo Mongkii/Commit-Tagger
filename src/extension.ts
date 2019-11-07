@@ -99,6 +99,7 @@ function openScopeNamePicker(
 
     picker.onDidChangeSelection(selection => {
       resolve([selectedCommitType, selection[0]]);
+      picker.hide();
     });
     picker.onDidTriggerButton(button => {
       if (button === buttonDelete) {
