@@ -6,7 +6,7 @@ export interface CommitType {
 
 export const enum ScopeMenuType {
   NONE,
-  CREATE
+  CREATE,
 }
 
 export interface ScopeName {
