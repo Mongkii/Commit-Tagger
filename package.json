@@ -2,7 +2,7 @@
 	"name": "commit-tagger",
 	"displayName": "Commit Tagger",
 	"description": "Generate tag for your commit at ease.",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"publisher": "Mongkii",
 	"icon": "images/icon.png",
 	"engines": {
@@ -27,7 +27,8 @@
 	},
 	"homepage": "https://github.com/mongkii/commit-tagger/blob/master/README.md",
 	"activationEvents": [
-		"onCommand:extension.commitTagger"
+		"onCommand:extension.commitTagger",
+		"onCommand:extension.commitTaggerSettings"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -39,6 +40,10 @@
 					"dark": "resources/dark/tag.svg",
 					"light": "resources/light/tag.svg"
 				}
+			},
+			{
+				"command": "extension.commitTaggerSettings",
+				"title": "Commit Tagger Settings"
 			}
 		],
 		"menus": {
@@ -49,7 +54,14 @@
 					"group": "navigation"
 				}
 			]
-		}
+		},
+		"keybindings": [
+			{
+				"command": "extension.commitTagger",
+				"key": "shift+alt+c",
+				"mac": "cmd+ctrl+c"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -60,7 +72,7 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^10.17.18",
-		"@types/vscode": "^1.43.0",
+		"@types/vscode": "^1.30.0",
 		"@typescript-eslint/eslint-plugin": "^2.26.0",
 		"@typescript-eslint/parser": "^2.26.0",
 		"eslint": "^6.8.0",
@@ -71,5 +83,8 @@
 		"tslint": "^5.20.1",
 		"typescript": "^3.8.3",
 		"vscode-test": "^1.3.0"
-	}
+	},
+	"eslintIgnore": [
+		"webview/neverland.js"
+	]
 }
