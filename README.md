@@ -18,9 +18,9 @@
 
 ## 如何使用
 
-有三种方式启动 Commit Tagger：
+- 有三种方式启动 Commit Tagger：
 
-- 在命令面板输入 `Commit Tagger`
+  - 在命令面板输入 `Commit Tagger`
 
   - 点击 Git 面板右上角的标签图标
 
