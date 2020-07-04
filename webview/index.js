@@ -209,6 +209,18 @@ interface CommitInfo {
   message?: string; // 提交信息主体。不填则使用提交信息输入框中的内容
 }</pre
     >
+    <br />
+    以下是一个简单的示例，在该示例中，如果分支名以 "fix" 开头，则自动生成提交信息："fix: [全局]
+    修复问题"；否则生成提交信息："Not a fix"
+    <pre>
+(curBranchName) => {
+  if (curBranchName.startsWith('fix')) {
+    return { type: 'fix', scope: '全局', message: '修复问题' };
+  }
+  return 'Not a fix';
+};
+</pre
+    >
   </div>`;
 
   return html`<div>
