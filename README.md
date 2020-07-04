@@ -40,6 +40,16 @@ _注：每个 workspace 的 scope 列表是各自独立的_
 
 ## 版本信息
 
+### 2.0.1
+
+FIX:
+
+- 当项目中存在多个 repo 时，提交信息无法正确填入选择的 repo（[#1](https://github.com/Mongkii/Commit-Tagger/issues/1)）
+
+DOCS:
+
+- 设置页，「自动生成提交信息」功能的帮助文档增加示例
+
 ### 2.0.0
 
 NEW:
