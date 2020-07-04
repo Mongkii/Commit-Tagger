@@ -130,7 +130,7 @@ export const getMainCommand = (context: ExtensionContext) => {
       return;
     }
     // 考虑到使用场景，暂不处理有多个 repository 的情况
-    const curRepository = git.repositories[0];
+    const curRepository = git.repositories.find((repo) => repo.ui.selected) || git.repositories[0];
     if (!curRepository) {
       window.showErrorMessage('没有找到 Repository');
       return;
