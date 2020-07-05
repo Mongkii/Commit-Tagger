@@ -1,10 +1,10 @@
 import { ExtensionContext, window, ViewColumn } from 'vscode';
-import { getGitAPI, getFileSrc, getStorage } from './utils';
+import { getGitAPI, getFileSrc, getStorage, getCurRepository } from './utils';
 import { defaultWebviewCommitStyles } from './constants';
 
 export const getSettingsCommand = (context: ExtensionContext) => () => {
   const git = getGitAPI();
-  const curRepository = git?.repositories[0];
+  const curRepository = git ? getCurRepository(git) : null;
   const curBranchName = curRepository?.state.HEAD?.name || '';
 
   const storage = getStorage(context);

@@ -17,6 +17,9 @@ export const getGitAPI = (): API | undefined => {
   return gitExtension?.getAPI(1);
 };
 
+export const getCurRepository = (gitApi: API) =>
+  gitApi.repositories.find((repo) => repo.ui.selected) || gitApi.repositories[0];
+
 export const getFileSrc = (relativePath: string, context: ExtensionContext) =>
   Uri.file(context.asAbsolutePath(relativePath)).with({ scheme: 'vscode-resource' }).toString();
 
