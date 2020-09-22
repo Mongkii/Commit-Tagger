@@ -1,0 +1,6 @@
+src
+images/!(icon.png)
+
+package-lock.json
+.*
+ts*.*
