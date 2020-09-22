@@ -7,9 +7,9 @@ import {
   window,
   commands,
 } from 'vscode';
-import { ScopeOption, CommitStyle } from './types';
-import { API, GitExtension } from './types/git';
-import { extensionCommand } from './constants';
+import { ScopeOption, CommitStyle } from '../types';
+import { API, GitExtension } from '../types/git';
+import { extensionCommand } from '../constants';
 
 export const getGitAPI = (): API | undefined => {
   const vscodeGit = extensions.getExtension<GitExtension>('vscode.git');
