@@ -10,6 +10,7 @@ import {
 import { ScopeOption, CommitStyle } from '../types';
 import { API, GitExtension } from '../types/git';
 import { extensionCommand } from '../constants';
+import getPinyinFromStr from './pinyin_convert';
 
 export const getGitAPI = (): API | undefined => {
   const vscodeGit = extensions.getExtension<GitExtension>('vscode.git');
@@ -57,10 +58,15 @@ export const getStorage = (context: ExtensionContext) => ({
     },
     add(newScopeOption: ScopeOption) {
       const scopeOptions = this.get();
-      if (scopeOptions.some((option) => option.label === newScopeOption.label)) {
+      const newScopeLabel = newScopeOption.label;
+      if (scopeOptions.some((option) => option.label === newScopeLabel)) {
         return scopeOptions;
       }
-      const newScopeOptions = [...scopeOptions, newScopeOption];
+      const newOptionWithPinyin: ScopeOption = {
+        ...newScopeOption,
+        description: getPinyinFromStr(newScopeLabel),
+      };
+      const newScopeOptions = [...scopeOptions, newOptionWithPinyin];
       this.update(newScopeOptions);
       return newScopeOptions;
     },

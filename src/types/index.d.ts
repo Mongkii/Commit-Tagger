@@ -26,6 +26,7 @@ export const enum ScopeOptionRole {
 
 export interface ScopeOption {
   label: string;
+  description?: string;
   role?: ScopeOptionRole;
 }
 

@@ -9,6 +9,7 @@ import {
 import { defaultCommitStyles, ScopeOptionNone, ScopeOptionCreate, commitTypes } from './constants';
 import { Repository } from './types/git';
 import { getStorage, getCommonQuickPick, getGitAPI, getCurRepository } from './utils';
+import getPinyinFromStr from './utils/pinyin_convert';
 
 export const getMainCommand = (context: ExtensionContext) => {
   const git = getGitAPI();
@@ -72,6 +73,7 @@ export const getMainCommand = (context: ExtensionContext) => {
       const scopePickerItems: ScopeOption[] = [ScopeOptionNone, ...scopeNames, ScopeOptionCreate];
       picker.items = scopePickerItems;
       picker.placeholder = `${commitType}: 请选择本次提交影响范围（如：项目的哪一模块）`;
+      picker.matchOnDescription = true;
 
       picker.onDidChangeSelection((selection) => {
         const scopeOption = selection[0];
@@ -91,6 +93,7 @@ export const getMainCommand = (context: ExtensionContext) => {
                 }
                 const newScopeOption: ScopeOption = {
                   label: newScopeName,
+                  description: getPinyinFromStr(newScopeName),
                 };
                 storage.scopeOptions.add(newScopeOption);
                 return newScopeName;
