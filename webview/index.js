@@ -89,11 +89,9 @@ const CommitStyleSelect = $((initCommitStyle = 'author') => {
  * ---------------- */
 const ScopeList = $((initScopeList = []) => {
   const [scopeList, setScopeList] = useState(initScopeList);
-  const [inputScopeName, setInputScopeName] = useState('');
-  const hasScope = scopeList.length > 0;
 
-  const content = (() => {
-    if (!hasScope) {
+  const listItems = (() => {
+    if (scopeList.length < 1) {
       return html`<p>Scope 列表为空</p>`;
     }
 
@@ -104,46 +102,48 @@ const ScopeList = $((initScopeList = []) => {
       });
     };
 
-    const handleInput = (event) => {
-      setInputScopeName(event.target.value);
-    };
-
-    const handleAdd = () => {
-      const newScopeName = inputScopeName.trim();
-      setInputScopeName('');
-      if (!newScopeName) {
-        return;
-      }
-      const newScopeOption = { label: newScopeName };
-      sendToVSCode('addToScopeList', newScopeOption, (newScopeList) => {
-        setScopeList(newScopeList);
-      });
-    };
-
     return html`<ul class="scope_list">
-        ${scopeList.map((scope) => {
-          const scopeName = scope.label;
-          return html`<li class="scope_item">
-            <span class="scope_name" title=${scopeName}>${scopeName}</span>
-            <a class="scope_delete" onclick=${getDeleteHandler(scopeName)}>删除</a>
-          </li>`;
-        })}
-      </ul>
-      <input
-        class="input_scope_name"
-        placeholder="新 scope 名称"
-        value=${inputScopeName}
-        oninput=${handleInput}
-      />
-      <button onclick=${handleAdd}>
-        添加
-      </button>`;
+      ${scopeList.map((scope) => {
+        const scopeName = scope.label;
+        return html`<li class="scope_item">
+          <span class="scope_name" title=${scopeName}>${scopeName}</span>
+          <a class="scope_delete" onclick=${getDeleteHandler(scopeName)}>删除</a>
+        </li>`;
+      })}
+    </ul> `;
   })();
+
+  const [inputScopeName, setInputScopeName] = useState('');
+
+  const handleInput = (event) => {
+    setInputScopeName(event.target.value);
+  };
+
+  const handleAdd = () => {
+    const newScopeName = inputScopeName.trim();
+    setInputScopeName('');
+    if (!newScopeName) {
+      return;
+    }
+    const newScopeOption = { label: newScopeName };
+    sendToVSCode('addToScopeList', newScopeOption, (newScopeList) => {
+      setScopeList(newScopeList);
+    });
+  };
 
   return html`<div>
     <h2>Scope 列表</h2>
     <p class="desc">你创建的影响范围（scope）列表。每个工作区（workspace）的列表是各自独立的</p>
-    ${content}
+    ${listItems}
+    <input
+      class="input_scope_name"
+      placeholder="新 scope 名称"
+      value=${inputScopeName}
+      oninput=${handleInput}
+    />
+    <button onclick=${handleAdd}>
+      添加
+    </button>
   </div>`;
 });
 
