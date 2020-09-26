@@ -69,7 +69,18 @@ export const getMainCommand = (context: ExtensionContext) => {
   const openScopeNamePicker = (commitType: string): Promise<string> =>
     new Promise((resolve) => {
       const picker = getCommonQuickPick<ScopeOption>(context);
-      const scopeNames = storage.scopeOptions.get();
+      let scopeNames = storage.scopeOptions.get();
+
+      // v2.1.0 版本支持音序功能。自此版本开始，需自动给没有音序的 scope 添加音序
+      if (scopeNames.some((option) => option.description === undefined)) {
+        const newScopeNames = scopeNames.map((option) => ({
+          ...option,
+          description: option.description ?? getPinyinFromStr(option.label),
+        }));
+        storage.scopeOptions.update(newScopeNames);
+        scopeNames = newScopeNames;
+      }
+
       const scopePickerItems: ScopeOption[] = [ScopeOptionNone, ...scopeNames, ScopeOptionCreate];
       picker.items = scopePickerItems;
       picker.placeholder = `${commitType}: 请选择本次提交影响范围（如：项目的哪一模块）`;
