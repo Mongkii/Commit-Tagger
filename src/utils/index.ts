@@ -38,6 +38,7 @@ export const getBtnSettings = (context: ExtensionContext): QuickInputButton => {
 export const getCommonQuickPick = <T extends QuickPickItem>(context: ExtensionContext) => {
   const picker = window.createQuickPick<T>();
   const btnSettings = getBtnSettings(context);
+  picker.title = 'Commit Tagger';
   picker.buttons = [btnSettings];
   picker.onDidTriggerButton((button) => {
     if (button === btnSettings) {
