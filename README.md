@@ -44,7 +44,13 @@
 
 _注：每个 workspace 的 scope 列表是各自独立的_
 
-## 版本信息
+## 近期更新
+
+### 2.1.3
+
+FIX:
+
+- 图标过大导致在 Git 面板无法正常显示（[#4](https://github.com/Mongkii/Commit-Tagger/issues/4)）
 
 ### 2.1.2
 
@@ -60,36 +66,7 @@ FEAT:
 
 - 选择 scope 时，可以使用拼音音序快速定位
 
-### 2.0.2
-
-FIX:
-
-- 当项目中存在多个 repo 时，提交信息无法正确填入选择的 repo（[#1](https://github.com/Mongkii/Commit-Tagger/issues/1)）
-
-DOCS:
-
-- 设置页，「自动生成提交信息」功能的帮助文档增加示例
-
-### 2.0.0
-
-NEW:
-
-- 选择 commit 风格
-- 使用函数，根据分支名自动生成提交信息
-- Commit Tagger 设置页面
-- 快捷键
-
-FIX:
-
-- 添加「影响范围」时没有去重
-
-### 1.0.1
-
-FIX: 有时选择完 scope 后，菜单不会自动关闭
-
-### 1.0.0
-
-首次发布
+**查看以往更新，请前往 [CHANGELOG](https://github.com/Mongkii/Commit-Tagger/blob/master/CHANGELOG.md)**
 
 ## TODO
 

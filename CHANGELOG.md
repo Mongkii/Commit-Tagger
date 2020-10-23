@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.1.3] - 2020-10-23
+
+FIX:
+
+- 图标过大导致在 Git 面板无法正常显示（[#4](https://github.com/Mongkii/Commit-Tagger/issues/4)）
+
 ## [2.1.2] - 2020-09-25
 
 FIX:
