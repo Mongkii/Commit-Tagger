@@ -43,6 +43,7 @@ export const getCommonQuickPick = <T extends QuickPickItem>(context: ExtensionCo
   picker.onDidTriggerButton((button) => {
     if (button === btnSettings) {
       commands.executeCommand(extensionCommand.SETTINGS);
+      picker.dispose();
     }
   });
   return picker;
