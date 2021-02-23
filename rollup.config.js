@@ -17,6 +17,7 @@ export default [
       dir: 'out/webview',
       format: 'esm',
     },
+    onwarn: (warning, warn) => warning.code !== 'EVAL' && warn(warning),
     plugins: [
       postcss({
         plugins: [postcssUrl({ url: 'inline' })],
