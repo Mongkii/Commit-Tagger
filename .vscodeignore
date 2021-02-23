@@ -1,6 +1,7 @@
 src
 images/!(icon.png)
 
+rollup.config.js
 package-lock.json
 .*
 ts*.*

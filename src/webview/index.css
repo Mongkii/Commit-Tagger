@@ -1,0 +1,78 @@
+/*
+--vscode-settings-headerForeground
+--vscode-settings-textInputForeground
+--vscode-settings-textInputBackground
+--vscode-settings-textInputBorder
+*/
+
+body {
+  padding: 20px;
+}
+
+h1 {
+  margin: 0 0 5px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--vscode-activityBar-foreground);
+}
+
+h2 {
+  margin: 30px 0 10px 0;
+  color: var(--vscode-settings-headerForeground);
+}
+
+h3 {
+  width: fit-content;
+  padding-right: 5px;
+  margin: 10px 0 5px 0;
+  border-bottom: 2px solid var(--vscode-settings-headerForeground);
+}
+
+p {
+  margin: 0 0 5px 0;
+}
+
+a {
+  cursor: pointer;
+}
+
+select {
+  margin-bottom: 5px;
+  padding: 4px;
+  border: 1px solid var(--vscode-settings-textInputBorder);
+  background-color: var(--vscode-settings-textInputBackground);
+  border-radius: 0;
+  color: var(--vscode-settings-textInputForeground);
+  font-size: var(--vscode-editor-font-size);
+}
+
+button {
+  margin-left: 10px;
+  padding: 3px 8px;
+  color: var(--vscode-textLink-foreground);
+  font-size: var(--vscode-editor-font-size);
+  border: 1px solid var(--vscode-textLink-foreground);
+  background-color: var(--vscode-editor-background);
+  cursor: pointer;
+  outline: none;
+}
+button:hover {
+  color: var(--vscode-textLink-activeForeground);
+  border-color: var(--vscode-textLink-activeForeground);
+}
+
+input,
+textarea {
+  font-size: var(--vscode-editor-font-size);
+  color: var(--vscode-editor-foreground);
+  background-color: var(--vscode-settings-textInputBackground);
+  border: 1px solid var(--vscode-settings-textInputBorder);
+}
+
+input {
+  padding: 4px;
+}
+
+.desc {
+  color: var(--vscode-editorGutter-commentRangeForeground);
+  margin-bottom: 10px;
+}

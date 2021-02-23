@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "out",
+    "module": "ES6",
+    "jsx": "react",
     "moduleResolution": "node",
     "removeComments": true,
     "sourceMap": false,
@@ -13,6 +12,5 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  },
-  "exclude": ["node_modules", ".vscode-test", "src/webview"]
+  }
 }

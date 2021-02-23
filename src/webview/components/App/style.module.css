@@ -1,0 +1,7 @@
+.wrapper > div {
+  margin-bottom: 20px;
+}
+
+.wrapper > div:first-of-type h2 {
+  margin-top: 20px;
+}

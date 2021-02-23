@@ -69,13 +69,12 @@ export const getSettingsCommand = (context: ExtensionContext) => () => {
     }
   });
 
-  const srcStyle = getFileSrc('/webview/style.css', context);
-  const srcNeverland = getFileSrc('/webview/neverland.js', context);
-  const srcApp = getFileSrc('/webview/index.js', context);
+  const srcStyle = getFileSrc('./out/webview/index.css', context);
+  const srcApp = getFileSrc('./out/webview/index.js', context);
   panel.webview.html = `<html><head>
   <link href="${srcStyle}" rel="stylesheet" />
   </head><body>
-  <script src="${srcNeverland}"></script>
+  <div id="app"></div>
   <script src="${srcApp}"></script>
   </body></html>`;
 };

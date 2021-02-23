@@ -1,0 +1,40 @@
+.help {
+  box-sizing: border-box;
+  width: 500px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid var(--vscode-settings-textInputBorder);
+  border-radius: 4px;
+}
+.help ul {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+.help pre {
+  width: fit-content;
+  margin: 4px 0;
+  padding: 4px 2px;
+  font-family: var(--vscode-editor-font-family);
+  border-top: 1px solid var(--vscode-settings-textInputBorder);
+  border-bottom: 1px solid var(--vscode-settings-textInputBorder);
+}
+
+.editorArea {
+  position: relative;
+  display: flex;
+  width: fit-content;
+}
+
+.btnSave {
+  align-self: flex-end;
+}
+
+.funcInput {
+  width: 500px;
+  height: 250px;
+  font-family: var(--vscode-editor-font-family);
+}
+
+.branchInput {
+  width: 300px;
+}

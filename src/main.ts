@@ -59,7 +59,7 @@ export const getMainCommand = (context: ExtensionContext) => {
       picker.placeholder = '请选择 commit 类型';
 
       picker.onDidChangeSelection((selection) => {
-        resolve(selection[0]);
+        resolve(selection[0]!);
         picker.dispose();
       });
 
@@ -87,7 +87,7 @@ export const getMainCommand = (context: ExtensionContext) => {
       picker.matchOnDescription = true;
 
       picker.onDidChangeSelection((selection) => {
-        const scopeOption = selection[0];
+        const scopeOption = selection[0]!;
         switch (scopeOption.role) {
           case ScopeOptionRole.NONE:
             resolve('');
