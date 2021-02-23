@@ -2,7 +2,7 @@
   "name": "commit-tagger",
   "displayName": "Commit Tagger",
   "description": "Generate tag for your commit at ease.",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "publisher": "Mongkii",
   "icon": "images/icon.png",
   "engines": {
