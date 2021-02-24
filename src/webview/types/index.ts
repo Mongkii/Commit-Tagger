@@ -12,3 +12,10 @@ export interface InitState {
   scopeList?: ScopeOption[];
   strConvertFunc?: string;
 }
+
+export interface Constants {
+  curBranchName: string;
+  commitStyles: {
+    [styleName in CommitStyle]: { formatter: string };
+  };
+}

@@ -4,14 +4,14 @@ import CommitStyleSelect from '../CommitStyleSelect';
 import ScopeList from '../ScopeList';
 import BranchConverter from '../BranchConverter';
 
-import { ConstantsContext } from '../../contexts';
+import { ConstantsContext, defaultConstants } from '../../contexts';
 import { sendToVSCode } from '../../utils';
 import { InitState } from '../../types';
 import c from './style.module.css';
 
 const App = (): JSX.Element => {
   const [initState, setInitState] = useState<InitState | null>(null);
-  const [constants, setConstants] = useState({});
+  const [constants, setConstants] = useState(defaultConstants);
 
   useEffect(() => {
     window.addEventListener('message', (event) => {

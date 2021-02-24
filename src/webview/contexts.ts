@@ -1,5 +1,12 @@
 import { createContext, useContext } from 'react';
 
-export const ConstantsContext = createContext<Record<string, any>>({});
+import { Constants } from './types';
 
-export const useConstants = () => useContext(ConstantsContext);
+export const defaultConstants: Constants = {
+  curBranchName: '',
+  commitStyles: { angular: { formatter: '' }, author: { formatter: '' } },
+};
+
+export const ConstantsContext = createContext(defaultConstants);
+
+export const useConstants = (): Constants => useContext(ConstantsContext);
