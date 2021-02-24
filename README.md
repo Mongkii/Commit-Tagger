@@ -2,6 +2,8 @@
 
 仅需几次点击，轻松生成 Angular 风格的规范 commit message。
 
+[VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=mongkii.commit-tagger)
+
 [GitHub](https://github.com/Mongkii/Commit-Tagger)
 
 [Issue](https://github.com/Mongkii/Commit-Tagger/issues)
