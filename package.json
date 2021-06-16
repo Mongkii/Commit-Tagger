@@ -31,6 +31,11 @@
     "onCommand:extension.commitTaggerSettings"
   ],
   "main": "./out/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
   "contributes": {
     "commands": [
       {
