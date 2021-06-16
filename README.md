@@ -48,6 +48,12 @@ _注：每个 workspace 的 scope 列表是各自独立的_
 
 ## 近期更新
 
+### 2.2.1
+
+FEAT:
+
+- 兼容 Workspace Trust
+
 ### 2.2.0
 
 REFACTOR:
