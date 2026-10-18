@@ -1,6 +1,6 @@
 import { ExtensionContext, window, ViewColumn } from 'vscode';
-import { getGitAPI, getFileSrc, getStorage, getCurRepository } from './utils';
-import { defaultWebviewCommitStyles } from './constants';
+import { getGitAPI, getFileSrc, getStorage, getCurRepository } from '../utils';
+import { defaultWebviewCommitStyles } from '../constants';
 
 export const getSettingsCommand = (context: ExtensionContext) => () => {
   const git = getGitAPI();
@@ -69,12 +69,16 @@ export const getSettingsCommand = (context: ExtensionContext) => () => {
     }
   });
 
-  const srcStyle = getFileSrc('./out/webview/index.css', context);
-  const srcApp = getFileSrc('./out/webview/index.js', context);
-  panel.webview.html = `<html><head>
-  <link href="${srcStyle}" rel="stylesheet" />
-  </head><body>
-  <div id="app"></div>
-  <script src="${srcApp}"></script>
-  </body></html>`;
+  const srcStyle = getFileSrc('./out/webview/style.css', panel.webview, context);
+  const srcApp = getFileSrc('./out/webview/index.js', panel.webview, context);
+  panel.webview.html = `
+  <html>
+    <head>
+      <link href="${srcStyle}" rel="stylesheet" />
+    </head>
+    <body>
+      <div id="app"></div>
+      <script src="${srcApp}"></script>
+    </body>
+  </html>`.trim();
 };

@@ -5,14 +5,14 @@ import {
   CommitTypeOptionRole,
   ScopeOption,
   ScopeOptionRole,
-} from './types';
-import { defaultCommitStyles, ScopeOptionNone, ScopeOptionCreate, commitTypes } from './constants';
-import { Repository } from './types/git';
-import { getStorage, getCommonQuickPick, getGitAPI, getCurRepository } from './utils';
-import getPinyinFromStr from './utils/pinyin_convert';
+} from '../types/common';
+import { defaultCommitStyles, ScopeOptionNone, ScopeOptionCreate, commitTypes } from '../constants';
+import { Repository } from '../types/git';
+import { getStorage, getCommonQuickPick, getGitAPI, getCurRepository } from '../utils';
+import getPinyinFromStr from '../utils/pinyin_convert';
+import { runBranchConverter } from '../utils/branch-converter';
 
-export const getMainCommand = (context: ExtensionContext) => {
-  const git = getGitAPI();
+export const getPanelCommand = (context: ExtensionContext) => {
   const storage = getStorage(context);
 
   const getCommitTag = (commitType: string, scopeName: string | undefined): string => {
@@ -21,17 +21,22 @@ export const getMainCommand = (context: ExtensionContext) => {
     return formatter(commitType, scopeName);
   };
 
+  const cleanCommitMessage = (message: string): string => {
+    const { regReplace } = defaultCommitStyles[storage.commitStyle.get()];
+    return regReplace ? message.replace(regReplace, '') : message;
+  };
+
   /** 将原始 commitTypes 和根据分支名称自动生成的 commitType 混合，生成新列表 */
   const getMixedCommitTypes = (commitTypes: CommitTypeOption[], curRepository: Repository) => {
     const convertFuncStr = storage.convertFunc.get();
-    const commitStyle = storage.commitStyle.get();
-    const curBranchName = curRepository.state.HEAD?.name;
+    const curBranchName = curRepository.state.HEAD?.name ?? '';
 
     let generatedCommitMsg: GeneratedCommitMsg | string | null = null;
     try {
-      const convertFunc = eval(convertFuncStr);
-      generatedCommitMsg = convertFunc(curBranchName);
-    } catch {}
+      generatedCommitMsg = runBranchConverter(convertFuncStr, curBranchName);
+    } catch (error) {
+      window.showErrorMessage(`commit 信息生成失败：${error instanceof Error ? error.message : String(error)}`);
+    }
 
     if (!generatedCommitMsg) {
       return commitTypes;
@@ -46,29 +51,36 @@ export const getMainCommand = (context: ExtensionContext) => {
     } else {
       const { type, scope, message } = generatedCommitMsg;
       const commitTag = getCommitTag(type, scope);
-      const finalMessage = message || curRepository.inputBox.value;
+      const finalMessage = message ?? cleanCommitMessage(curRepository.inputBox.value);
       generatedCommitType.label = `${commitTag}${finalMessage}`;
     }
     return [generatedCommitType, ...commitTypes];
   };
 
-  const openCommitTypeOptionPicker = (commitTypes: CommitTypeOption[]): Promise<CommitTypeOption> =>
+  const openCommitTypeOptionPicker = (commitTypes: CommitTypeOption[]): Promise<CommitTypeOption | undefined> =>
     new Promise((resolve) => {
       const picker = getCommonQuickPick<CommitTypeOption>(context);
+      let selectedOption: CommitTypeOption | undefined;
       picker.items = commitTypes;
       picker.placeholder = '请选择 commit 类型';
 
       picker.onDidChangeSelection((selection) => {
-        resolve(selection[0]!);
+        selectedOption = selection[0];
+        picker.dispose();
+      });
+
+      picker.onDidHide(() => {
+        resolve(selectedOption);
         picker.dispose();
       });
 
       picker.show();
     });
 
-  const openScopeNamePicker = (commitType: string): Promise<string> =>
+  const openScopeNamePicker = (commitType: string): Promise<string | undefined> =>
     new Promise((resolve) => {
       const picker = getCommonQuickPick<ScopeOption>(context);
+      let selectedOption: ScopeOption | undefined;
       let scopeNames = storage.scopeOptions.get();
 
       // v2.1.0 版本支持音序功能。自此版本开始，需自动给没有音序的 scope 添加音序
@@ -87,7 +99,17 @@ export const getMainCommand = (context: ExtensionContext) => {
       picker.matchOnDescription = true;
 
       picker.onDidChangeSelection((selection) => {
-        const scopeOption = selection[0]!;
+        selectedOption = selection[0];
+        picker.dispose();
+      });
+
+      picker.onDidHide(async () => {
+        if (!selectedOption) {
+          resolve(undefined);
+          picker.dispose();
+          return;
+        }
+        const scopeOption = selectedOption;
         switch (scopeOption.role) {
           case ScopeOptionRole.NONE:
             resolve('');
@@ -100,7 +122,7 @@ export const getMainCommand = (context: ExtensionContext) => {
                 });
                 const newScopeName = input && input.trim();
                 if (!newScopeName) {
-                  return '';
+                  return undefined;
                 }
                 const newScopeOption: ScopeOption = {
                   label: newScopeName,
@@ -120,25 +142,28 @@ export const getMainCommand = (context: ExtensionContext) => {
       picker.show();
     });
 
-  const addTagInCommitMessage = (
+  const focusScmInput = async () => {
+    await commands.executeCommand('workbench.scm.action.focusNextInput');
+  };
+
+  const addTagInCommitMessage = async (
     repository: Repository,
     commitTag: string,
     clearPrev?: boolean
   ) => {
-    // 界面切换至 Git 页
-    commands.executeCommand('workbench.view.scm');
     if (clearPrev) {
       repository.inputBox.value = commitTag;
+      await focusScmInput();
       return;
     }
-    const commitStyle = storage.commitStyle.get();
     // 如果已有与本插件格式相同的 tag， 就清除
-    const { regReplace } = defaultCommitStyles[commitStyle];
-    const cleanCommitMessage = repository.inputBox.value.replace(regReplace || '', '');
-    repository.inputBox.value = `${commitTag}${cleanCommitMessage}`;
+    repository.inputBox.value = `${commitTag}${cleanCommitMessage(repository.inputBox.value)}`;
+    // Quick Pick 关闭并写入完成后，再把光标交还给 Git 提交信息输入框
+    await focusScmInput();
   };
 
   return async () => {
+    const git = getGitAPI();
     if (!git) {
       window.showErrorMessage('没有找到 Git');
       return;
@@ -156,14 +181,17 @@ export const getMainCommand = (context: ExtensionContext) => {
       return;
     }
     if (commitTypeOption.role === CommitTypeOptionRole.GENERATED) {
-      addTagInCommitMessage(curRepository, commitTypeOption.label, true);
+      await addTagInCommitMessage(curRepository, commitTypeOption.label, true);
       return;
     }
 
     const commitType = commitTypeOption.value || commitTypeOption.label;
     const scopeName = await openScopeNamePicker(commitType);
+    if (scopeName === undefined) {
+      return;
+    }
     const fullCommitTag = getCommitTag(commitType, scopeName);
 
-    addTagInCommitMessage(curRepository, fullCommitTag);
+    await addTagInCommitMessage(curRepository, fullCommitTag);
   };
 };

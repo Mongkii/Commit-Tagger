@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 
 import { useConstants } from '../../contexts';
 import { sendToVSCode } from '../../utils';
+import { runBranchConverter } from '../../../utils/branch-converter';
 import c from './style.module.css';
 
 const helpTextCommitInfoType = `interface CommitInfo {
@@ -50,11 +51,10 @@ const BranchConverter = ({ initStrConvertFunc = '' }: Props): JSX.Element => {
       return '未填写生成函数';
     }
     try {
-      const convertFunc = eval(savedConvertFunc);
-      const newTestResult = convertFunc(testBranch);
+      const newTestResult = runBranchConverter(savedConvertFunc, testBranch);
       return JSON.stringify(newTestResult);
     } catch (e) {
-      return `函数错误：${e.name}`;
+      return `函数错误：${e instanceof Error ? e.message : String(e)}`;
     }
   }, [testBranch, savedConvertFunc]);
 

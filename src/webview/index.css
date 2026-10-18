@@ -73,6 +73,6 @@ input {
 }
 
 .desc {
-  color: var(--vscode-editorGutter-commentRangeForeground);
+  color: var(--vscode-foreground);
   margin-bottom: 10px;
 }

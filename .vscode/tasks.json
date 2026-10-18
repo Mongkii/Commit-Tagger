@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compile",
+      "type": "shell",
+      "command": "bun run compile",
+      "detail": "Build the extension and webview before launching the Extension Development Host.",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": "$tsc",
+      "presentation": { "reveal": "never" }
+    },
+    {
+      "label": "watch",
+      "detail": "Continuously rebuild the extension and webview during manual debugging.",
+      "dependsOn": ["bun: watch:webview", "bun: watch:main", "bun: watch:types:webview"],
+      "dependsOrder": "parallel",
+      "presentation": { "reveal": "never" },
+      "group": "build"
+    },
+    {
+      "label": "bun: watch:webview",
+      "type": "shell",
+      "command": "bun run watch:webview",
+      "detail": "Continuously rebuild the webview bundle.",
+      "group": "build",
+      "isBackground": true,
+      "options": { "env": { "NO_COLOR": "1" } },
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": {
+          "regexp": "^(.+):(\\d+):(\\d+): (.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^build started\\.\\.\\.$",
+          "endsPattern": "^built in \\d+ms\\.$"
+        }
+      },
+      "presentation": { "group": "watch", "reveal": "never" }
+    },
+    {
+      "label": "bun: watch:types:webview",
+      "type": "shell",
+      "command": "bun run watch:types:webview",
+      "detail": "Continuously type-check the webview and shared code.",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "presentation": { "group": "watch", "reveal": "never" }
+    },
+    {
+      "label": "bun: watch:main",
+      "type": "shell",
+      "command": "bun run watch:main",
+      "detail": "Continuously rebuild the extension host code.",
+      "group": "build",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "presentation": { "group": "watch", "reveal": "never" }
+    }
+  ]
+}

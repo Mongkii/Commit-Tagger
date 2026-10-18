@@ -17,7 +17,7 @@ const CommitStyleSelect = ({ initCommitStyle = 'author' }: Props): JSX.Element =
 
   const styleResult = useMemo(() => {
     try {
-      const func = eval(commitStyles[commitStyle].formatter);
+      const func = new Function('return (' + commitStyles[commitStyle].formatter + ')')();
       const [type, scope, message] = tdatas;
       return `${func(type, scope)}${message}`;
     } catch (e) {}
