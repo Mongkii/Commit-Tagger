@@ -1,7 +1,7 @@
 src
 images/!(icon.png)
 
-rollup.config.js
-package-lock.json
+vite.config.ts
+bun.lock
 .*
 ts*.*

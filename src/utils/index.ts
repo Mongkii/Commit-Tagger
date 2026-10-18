@@ -1,5 +1,6 @@
 import {
   Uri,
+  Webview,
   ExtensionContext,
   QuickInputButton,
   extensions,
@@ -7,9 +8,9 @@ import {
   window,
   commands,
 } from 'vscode';
-import { ScopeOption, CommitStyle } from '../types';
+import { ScopeOption, CommitStyle } from '../types/common';
 import { API, GitExtension } from '../types/git';
-import { extensionCommand } from '../constants';
+import { ExtensionCommand } from '../constants';
 import getPinyinFromStr from './pinyin_convert';
 
 export const getGitAPI = (): API | undefined => {
@@ -21,8 +22,8 @@ export const getGitAPI = (): API | undefined => {
 export const getCurRepository = (gitApi: API) =>
   gitApi.repositories.find((repo) => repo.ui.selected) || gitApi.repositories[0];
 
-export const getFileSrc = (relativePath: string, context: ExtensionContext) =>
-  Uri.file(context.asAbsolutePath(relativePath)).with({ scheme: 'vscode-resource' }).toString();
+export const getFileSrc = (relativePath: string, webview: Webview, context: ExtensionContext) =>
+  webview.asWebviewUri(Uri.file(context.asAbsolutePath(relativePath))).toString();
 
 export const getBtnSettings = (context: ExtensionContext): QuickInputButton => {
   const button: QuickInputButton = {
@@ -42,7 +43,7 @@ export const getCommonQuickPick = <T extends QuickPickItem>(context: ExtensionCo
   picker.buttons = [btnSettings];
   picker.onDidTriggerButton((button) => {
     if (button === btnSettings) {
-      commands.executeCommand(extensionCommand.SETTINGS);
+      commands.executeCommand(ExtensionCommand.SETTINGS);
       picker.dispose();
     }
   });
@@ -74,7 +75,7 @@ export const getStorage = (context: ExtensionContext) => ({
     },
   },
   commitStyle: {
-    get: (): CommitStyle => context.globalState.get(COMMIT_STYLE, CommitStyle.AUTHOR),
+    get: (): CommitStyle => context.globalState.get(COMMIT_STYLE, CommitStyle.ANGULAR),
     update: (newCommitStyle: CommitStyle) => {
       context.globalState.update(COMMIT_STYLE, newCommitStyle);
     },

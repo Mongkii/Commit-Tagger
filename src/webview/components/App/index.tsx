@@ -5,7 +5,7 @@ import ScopeList from '../ScopeList';
 import BranchConverter from '../BranchConverter';
 
 import { ConstantsContext, defaultConstants } from '../../contexts';
-import { sendToVSCode } from '../../utils';
+import { sendToVSCode, resolveCallback } from '../../utils';
 import { InitState } from '../../types';
 import c from './style.module.css';
 
@@ -25,11 +25,7 @@ const App = (): JSX.Element => {
         }
         case 'callback': {
           const { callbackId, args = [] } = message.payload;
-          const callback = window.callback[callbackId];
-          if (callback) {
-            callback(...args);
-            delete window.callback[callbackId];
-          }
+          resolveCallback(callbackId, args);
           return;
         }
         default:

@@ -5,12 +5,12 @@ import {
   CommitStyle,
   CommitStyleConfig,
   WebviewCommitStyleConfig,
-} from './types';
+} from './types/common';
 
-export const extensionCommand = {
-  MAIN: 'extension.commitTagger',
-  SETTINGS: 'extension.commitTaggerSettings',
-};
+export const enum ExtensionCommand {
+  PANEL = 'extension.commitTagger',
+  SETTINGS = 'extension.commitTagger.settings',
+}
 
 export const ScopeOptionNone: ScopeOption = {
   label: '» 无',
