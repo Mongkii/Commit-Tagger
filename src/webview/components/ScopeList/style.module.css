@@ -1,32 +1,23 @@
-
-.scopeList {
-  padding-left: 0;
+.scopeEditor {
+  display: block;
+  width: 500px;
+  min-height: 160px;
+  font-family: var(--vscode-editor-font-family);
 }
 
-.listItem {
+.actions {
   display: flex;
   align-items: center;
-  width: fit-content;
-  padding: 4px 0;
-  border-bottom: 1px solid var(--vscode-settings-textInputBorder);
-  list-style: none;
+  gap: 12px;
+  margin-top: 8px;
 }
 
-.listItem:hover {
-  background-color: var(--vscode-list-hoverBackground);
+.actions button {
+  margin-left: 0;
 }
 
-.itemName {
-  width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.btnDel {
-  margin-left: 10px;
-}
-
-.nameInput {
-  width: 300px;
+.actions button:disabled {
+  color: var(--vscode-disabledForeground);
+  border-color: var(--vscode-disabledForeground);
+  cursor: default;
 }

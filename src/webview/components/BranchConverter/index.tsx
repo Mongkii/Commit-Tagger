@@ -45,6 +45,7 @@ const BranchConverter = ({ initStrConvertFunc = '' }: Props): JSX.Element => {
   const [inputConvertFunc, setInputConvertFunc] = useState(initStrConvertFunc);
   const [testBranch, setTestBranch] = useState(curBranchName);
   const [showHelp, setShowHelp] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const testResult = useMemo(() => {
     if (!savedConvertFunc) {
@@ -76,8 +77,10 @@ const BranchConverter = ({ initStrConvertFunc = '' }: Props): JSX.Element => {
   const saveFunc = () => {
     const newFuncStr = inputConvertFunc.trim();
     setInputConvertFunc(newFuncStr);
+    setIsSaving(true);
     sendToVSCode('updateConvertFunc', newFuncStr, () => {
       setSavedConvertFunc(newFuncStr);
+      setIsSaving(false);
     });
   };
 
@@ -90,18 +93,20 @@ const BranchConverter = ({ initStrConvertFunc = '' }: Props): JSX.Element => {
       </p>
       {showHelp ? <Help /> : null}
       <p className="desc">
-        函数保存后，可在下方测试运行结果。当前状态：{isStrFuncChanged ? '未保存' : '已保存'}
+        函数保存后，可在下方测试运行结果。
       </p>
-      <div className={c.editorArea}>
-        <textarea
-          className={c.funcInput}
-          placeholder="生成函数"
-          value={inputConvertFunc}
-          onInput={handleFuncInput}
-        />
-        <button className={c.btnSave} onClick={saveFunc}>
+      <textarea
+        className={c.funcInput}
+        placeholder="生成函数"
+        value={inputConvertFunc}
+        onInput={handleFuncInput}
+        disabled={isSaving}
+      />
+      <div className={c.actions}>
+        <button type="button" onClick={saveFunc} disabled={!isStrFuncChanged || isSaving}>
           保存
         </button>
+        <span role="status">{isSaving ? '保存中…' : isStrFuncChanged ? '未保存' : '已保存'}</span>
       </div>
       <h3>测试</h3>
       <p>

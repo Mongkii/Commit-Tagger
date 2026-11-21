@@ -19,17 +19,25 @@
   border-bottom: 1px solid var(--vscode-settings-textInputBorder);
 }
 
-.editorArea {
-  position: relative;
+.actions {
   display: flex;
-  width: fit-content;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
 }
 
-.btnSave {
-  align-self: flex-end;
+.actions button {
+  margin-left: 0;
+}
+
+.actions button:disabled {
+  color: var(--vscode-disabledForeground);
+  border-color: var(--vscode-disabledForeground);
+  cursor: default;
 }
 
 .funcInput {
+  display: block;
   width: 500px;
   height: 250px;
   font-family: var(--vscode-editor-font-family);
