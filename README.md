@@ -46,6 +46,12 @@ _注：每个 workspace 的 scope 列表是各自独立的_
 
 ## 近期更新
 
+### 2.3.1
+
+FEAT:
+
+- 设置页完善
+
 ### 2.3.0
 
 FEAT:
@@ -77,14 +83,6 @@ FEAT:
 FIX:
 
 - 图标过大导致在 Git 面板无法正常显示（[#4](https://github.com/Mongkii/Commit-Tagger/issues/4)）
-
-### 2.1.2
-
-FIX:
-
-- 无 scope 时，在设置页无法新建 scope
-- QuickPick 组件由于未设置 title，导致展示为占位符「;」
-- 设置页样式未正确加载
 
 **查看以往更新，请前往 [CHANGELOG](https://github.com/Mongkii/Commit-Tagger/blob/master/CHANGELOG.md)**
 
